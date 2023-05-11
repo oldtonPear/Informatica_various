@@ -3,17 +3,14 @@ import java.util.Scanner;
 
 public class Cliente {
     private String nome, cognome, cod_fiscale;
-    private int bilancio;
     private static ArrayList<Movimento> movimenti = new ArrayList<Movimento>();
     Cliente(String nome, String cognome, String cod_fiscale, ArrayList<Movimento> movimenti){
         this.nome = nome;
         this.cognome = cognome;
         this.cod_fiscale = cod_fiscale;
-        this.bilancio = bilancio;
     }
-    public void azione(Cliente c1, Movimento m, Cliente c2){
-        Scanner scn = new Scanner(System.in);
-        m = new Movimento(scn.nextInt(), scn.nextBoolean(), scn.nextDouble(), c2);
+    public static String getMovimentiToSTring(){
+        return movimenti.toString();
     }
     public static ArrayList<Movimento> getMovimenti(){
         return movimenti;
@@ -23,5 +20,15 @@ public class Cliente {
     }
     public String getCognome(){
         return cognome;
+    }
+    public String toString(){
+        return this.nome + "\n" + this.cognome + "\n" + this.cod_fiscale + "\n";
+    }
+    public static double bilancio(){
+        double dindini = 0;
+        for (Movimento movimento : movimenti) {
+            dindini += movimento.getImporto();
+        }
+        return dindini;
     }
 }
