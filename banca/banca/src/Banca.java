@@ -44,26 +44,33 @@ public class Banca {
         return listaClienti;
     }
     
-    public static void graficoMovimenti(Cliente c){
+    public static String[][] ottieniValoriGrafico(Cliente c){
+        
         int annoMinore = c.getMovimenti().get(0).getAnno(), annomaggiore = c.getMovimenti().get(0).getAnno();
         for (int i = 0; i < c.getMovimenti().size(); i++) {
             if(c.getMovimenti().get(i).getAnno() > annomaggiore) annomaggiore = c.getMovimenti().get(i).getAnno();
             if(c.getMovimenti().get(i).getAnno() < annoMinore) annoMinore = c.getMovimenti().get(i).getAnno();
         }
 
-
         double importoMaggiore = c.getMovimenti().get(0).getImporto(), importoMinore = c.getMovimenti().get(0).getImporto();
         for (int i = 0; i < c.getMovimenti().size(); i++) {
             if(c.getMovimenti().get(i).getImporto() > importoMaggiore) importoMaggiore = c.getMovimenti().get(i).getImporto();
             if(c.getMovimenti().get(i).getImporto() < importoMinore) importoMinore = c.getMovimenti().get(i).getImporto();
         }
+        String[][] mat = new String[(int)(importoMaggiore+importoMinore)/5][annomaggiore];
+        int appoggio = 0;
         for (int i = 0; i < importoMaggiore-importoMinore+1; i++) {
-            for (int j = 0; j < annomaggiore-annoMinore+1; j++) {
-                if(c.getMovimenti().get(i).getAnno() == c.getMovimenti().get(j).getAnno()) System.out.println("X");
-            }
+            if(i % 5 ==0) System.out.println(importoMaggiore-i);
+            appoggio = (int)importoMaggiore-i;
+            mat[0][i] = 
+            
         }
+        System.out.print("    ");
         for (int i = 0; i < annomaggiore-annoMinore+1; i++) {
             System.out.print(annoMinore+i + " | ");
         }
+    }
+    public static void graficoMovimenti(){
+
     }
 }
