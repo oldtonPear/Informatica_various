@@ -9,7 +9,7 @@ public class Cliente {
         this.cognome = cognome;
         this.cod_fiscale = cod_fiscale;
     }
-    public static String getMovimentiToSTring(){
+    public String getMovimentiToSTring(){
         return movimenti.toString();
     }
     public static ArrayList<Movimento> getMovimenti(){
@@ -24,7 +24,7 @@ public class Cliente {
     public String toString(){
         return this.nome + "\n" + this.cognome + "\n" + this.cod_fiscale + "\n";
     }
-    public static double bilancio(){
+    public double bilancio(){
         double dindini = 0;
         for (Movimento movimento : movimenti) {
             dindini += movimento.getImporto();
