@@ -57,20 +57,39 @@ public class Banca {
             if(c.getMovimenti().get(i).getImporto() > importoMaggiore) importoMaggiore = c.getMovimenti().get(i).getImporto();
             if(c.getMovimenti().get(i).getImporto() < importoMinore) importoMinore = c.getMovimenti().get(i).getImporto();
         }
-        String[][] mat = new String[(int)(importoMaggiore+importoMinore)/5][annomaggiore];
-        int appoggio = 0;
-        for (int i = 0; i < importoMaggiore-importoMinore+1; i++) {
-            if(i % 5 ==0) System.out.println(importoMaggiore-i);
-            appoggio = (int)importoMaggiore-i;
-            mat[0][i] = 
-            
+        String[][] mat = new String[(int)(Math.abs(importoMaggiore)+Math.abs(importoMinore))/5][annomaggiore];
+        for (int i = 0; i < Math.abs(importoMaggiore-importoMinore+1); i++) {
+            if(i % 5 ==0){
+                mat[0][i] = importoMinore + 5*i + "";
+            }
         }
-        System.out.print("    ");
-        for (int i = 0; i < annomaggiore-annoMinore+1; i++) {
-            System.out.print(annoMinore+i + " | ");
+        for (int i = 0; i < Math.abs(annomaggiore-annoMinore+1); i++) {
+            mat[i][mat.length] = annoMinore+i + "";
+        }
+        return mat;
+    }
+    public static void graficoMovimenti(Cliente c){
+        String[][] mat = ottieniValoriGrafico(c);
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[i].length; j++) {
+                if(esisteCorrispondenza(Double.valueOf(mat[mat[mat.length].length][i]), Double.valueOf(mat[i][0]), c)){
+                    mat[i][j] = "X";
+                }
+            }
+        }
+        stampaMatrice(mat);
+    }
+    public static void stampaMatrice(String[][] mat){
+        for (int i = 0; i < mat.length; i++) {
+            for (int j = 0; j < mat[i].length; j++) {
+                System.out.println(mat[i][j]);
+            }
         }
     }
-    public static void graficoMovimenti(){
-
+    public static boolean esisteCorrispondenza(double anno, double soldi, Cliente c){
+        for (int i = 0; i< c.getMovimenti().size(); i++) {
+            if(c.getMovimenti().get(i).getAnno() == anno && c.getMovimenti().get(i).getImporto() == soldi) return true; 
+        }
+        return false;
     }
 }

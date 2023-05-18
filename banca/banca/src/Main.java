@@ -105,6 +105,7 @@ public class Main {
         }
         catch(Exception e){
             System.out.println("inserisci un valore valido \n");
+            e.printStackTrace();
             scegli();
         }
         finally{
