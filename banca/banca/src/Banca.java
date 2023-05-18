@@ -72,7 +72,7 @@ public class Banca {
         String[][] mat = ottieniValoriGrafico(c);
         for (int i = 0; i < mat.length; i++) {
             for (int j = 0; j < mat[i].length; j++) {
-                if(esisteCorrispondenza(Double.valueOf(mat[mat[mat.length].length][i]), Double.valueOf(mat[i][0]), c)){
+                if(esisteCorrispondenza(Double.valueOf(mat[mat[mat.length-1].length-1][i]), Double.valueOf(mat[i][0]), c)){
                     mat[i][j] = "X";
                 }
             }
