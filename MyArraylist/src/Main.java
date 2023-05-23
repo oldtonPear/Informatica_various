@@ -6,7 +6,5 @@ public class Main {
         //list.printa();
         list.remove(0);
         list.printa();
-        
-        
     }
 }
