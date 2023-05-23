@@ -1,6 +1,6 @@
 import java.util.*;
-public class MyArraylist <E>{
-    private final Object[] arr;
+public class MyArraylist {
+    /*private final Object[] arr;
     public final int length;
  
     // constructor
@@ -27,7 +27,7 @@ public class MyArraylist <E>{
     public String toString() {
         return Arrays.toString(arr);
     }
-/* 
+*/
     int[] arr = new int[0];
     
     public void add(int n){
@@ -37,7 +37,7 @@ public class MyArraylist <E>{
     public void set(int pos, int valore){
         arr[pos] = valore;
     }
-    /*public int get(int n){
+    public int get(int n){
         return arr[n];
     }
     public void remove(int n){
@@ -73,5 +73,5 @@ public class MyArraylist <E>{
             arr2[i] = arr[i];
         }
         return arr2;
-    }*/
+    }
 }
