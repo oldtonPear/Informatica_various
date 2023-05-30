@@ -1,8 +1,8 @@
 public class Pallino {
-    private int x, y;
+    private int x, y, direzione;
     private boolean arrivato;
     
-    Pallino(int x, int y, boolean arrivato){
+    Pallino(int x, int y, boolean arrivato, int direzione){
 
     }
 
@@ -33,5 +33,10 @@ public class Pallino {
     public void setArrivato(boolean arrivato) {
         this.arrivato = arrivato;
     }
-    
+    public int getDirezione() {
+        return direzione;
+    }
+    public void setDirezione(int direzione) {
+        this.direzione = direzione;
+    }
 }
