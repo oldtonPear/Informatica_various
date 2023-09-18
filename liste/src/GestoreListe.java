@@ -3,15 +3,16 @@ import java.net.http.WebSocket.Listener;
 public class GestoreListe <T>{
     ListElement <T> head;
     
-
-    public void cercaElemento(T elemento){
+    /*** cerca se l'elemento è presente nella lista */
+    public int cercaElemento(T elemento){
         int i = 0;
         ListElement <T> current = head;
         while(current != null){
-            if(current.getData() == elemento) System.out.println("trovato alla posizione: " + i);
+            if(current.getData() == elemento) return i;
             i++;
             current = current.next;
         }
+        return -1;
     }
 
     public void printaLista(ListElement <T> head){

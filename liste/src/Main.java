@@ -16,6 +16,6 @@ public class Main {
         ges.rimuoviPerValore(ges.getHead(), "ciao");
         ges.printaLista(ges.getHead());
 
-        ges.cercaElemento("sono");
+        System.out.println(ges.cercaElemento("sono"));
     }
 }
