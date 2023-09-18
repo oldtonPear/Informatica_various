@@ -74,11 +74,12 @@ public class GestoreListe <T>{
     public void rimuoviPerValore(ListElement <T> element, T valore){
         ListElement <T> current = head;
         ListElement <T> previous = null;
+        int i = 0;
         while(current.next != null){
             if(current.getData() == valore){
-                previous = current;
-                current = current.next;
+                rimuoviNodo(i);
             }
+            i++;
             previous = current;
             current = current.next;
         }

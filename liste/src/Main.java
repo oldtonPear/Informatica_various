@@ -13,9 +13,9 @@ public class Main {
         ges.printaLista(ges.getHead());
 
         //ges.rimuoviNodo(0);
-        ges.rimuoviPerValore(ges.getHead(), "sono");
+        ges.rimuoviPerValore(ges.getHead(), "ciao");
         ges.printaLista(ges.getHead());
 
-        ges.cercaElemento("o");
+        ges.cercaElemento("sono");
     }
 }
