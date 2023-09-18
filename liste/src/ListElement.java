@@ -1,11 +1,10 @@
-public class ListElement {
-    ListElement next;
-    private String data;
-    ListElement(String newData){
+public class ListElement <T>{
+    ListElement <T> next;
+    private T data;
+    ListElement(T newData){
         data = newData;
     }
-public String getData() {
-    return data;
-}
-    
+    public T getData() {
+        return data;
+    }
 }
