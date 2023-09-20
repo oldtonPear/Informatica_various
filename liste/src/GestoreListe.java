@@ -3,7 +3,7 @@ import java.net.http.WebSocket.Listener;
 public class GestoreListe <T>{
     ListElement <T> head;
     
-    /*** cerca se l'elemento è presente nella lista */
+    /**cerca se l'elemento è presente nella lista */
     public int cercaElemento(T elemento){
         int i = 0;
         ListElement <T> current = head;
@@ -14,7 +14,7 @@ public class GestoreListe <T>{
         }
         return -1;
     }
-    /***printa la lista partendo dalla head passata */
+    /**printa la lista partendo dalla head passata */
     public void printaLista(ListElement <T> head){
         ListElement <T> current = head;
          while(current != null){
@@ -23,12 +23,12 @@ public class GestoreListe <T>{
          }
          System.out.println("");
     }
-    /***inserisci un elemento in testa */
+    /**inserisci un elemento in testa */
     public void inserisciInTesta(ListElement <T> element){
         element.next = head;
         head = element;
     }
-    /***inserisce un elemento in coda */
+    /**inserisce un elemento in coda */
     public void inserisciInCoda(ListElement <T> element){
         ListElement <T> current = head;
         while(current.next != null){
@@ -37,7 +37,7 @@ public class GestoreListe <T>{
         current.next = element;
         element.next = null;
     }
-    /***inseirsce un elemento alla posizione passata */
+    /**inseirsce un elemento alla posizione passata */
     public void inserisciInMezzo(ListElement <T> element, int pos){
         if(pos == 0){
             element.next = head;
@@ -54,11 +54,11 @@ public class GestoreListe <T>{
             element.next = current;
         }
     }
-    /***rimuove l'elemento in head */
+    /**rimuove l'elemento in head */
     public void rimuoviHead(){
         head = head.next;
     }
-    /***rimuove il nodo alla posizione n */
+    /**rimuove il nodo alla posizione n */
     public void rimuoviNodo(int pos){
         if(pos == 0) rimuoviHead();
         else{
@@ -72,7 +72,7 @@ public class GestoreListe <T>{
             current = null;
         }
     }
-    /***rimuove il primo nodo che ha come dato il valore passato */
+    /**rimuove il primo nodo che ha come dato il valore passato */
     public void rimuoviPerValore(ListElement <T> element, T valore){
         ListElement <T> current = head;
         ListElement <T> previous = null;
