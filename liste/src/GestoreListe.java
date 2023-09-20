@@ -14,11 +14,7 @@ public class GestoreListe <T>{
         }
         return -1;
     }
-<<<<<<< HEAD
-    
-=======
     /**printa la lista partendo dalla head passata */
->>>>>>> 50a2be8319ff1af54b885337fefa8d80555e21fd
     public void printaLista(ListElement <T> head){
         ListElement <T> current = head;
         while(current != null){
@@ -27,20 +23,12 @@ public class GestoreListe <T>{
         }
         System.out.println("");
     }
-<<<<<<< HEAD
-    
-=======
     /**inserisci un elemento in testa */
->>>>>>> 50a2be8319ff1af54b885337fefa8d80555e21fd
     public void inserisciInTesta(ListElement <T> element){
         element.next = head;
         head = element;
     }
-<<<<<<< HEAD
-    
-=======
     /**inserisce un elemento in coda */
->>>>>>> 50a2be8319ff1af54b885337fefa8d80555e21fd
     public void inserisciInCoda(ListElement <T> element){
         ListElement <T> current = head;
         while(current.next != null){
@@ -49,11 +37,7 @@ public class GestoreListe <T>{
         current.next = element;
         element.next = null;
     }
-<<<<<<< HEAD
-    
-=======
     /**inseirsce un elemento alla posizione passata */
->>>>>>> 50a2be8319ff1af54b885337fefa8d80555e21fd
     public void inserisciInMezzo(ListElement <T> element, int pos){
         if(pos == 0){
             element.next = head;
@@ -70,19 +54,11 @@ public class GestoreListe <T>{
             element.next = current;
         }
     }
-<<<<<<< HEAD
-    
-    public void rimuoviHead(){
-        head = head.next;
-    }
-    
-=======
     /**rimuove l'elemento in head */
     public void rimuoviHead(){
         head = head.next;
     }
     /**rimuove il nodo alla posizione n */
->>>>>>> 50a2be8319ff1af54b885337fefa8d80555e21fd
     public void rimuoviNodo(int pos){
         if(pos == 0) rimuoviHead();
         else{
