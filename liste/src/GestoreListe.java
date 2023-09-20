@@ -14,21 +14,21 @@ public class GestoreListe <T>{
         }
         return -1;
     }
-
+    
     public void printaLista(ListElement <T> head){
         ListElement <T> current = head;
-         while(current != null){
+        while(current != null){
             System.out.println(current.getData());
             current = current.next;
-         }
-         System.out.println("");
+        }
+        System.out.println("");
     }
-
+    
     public void inserisciInTesta(ListElement <T> element){
         element.next = head;
         head = element;
     }
-
+    
     public void inserisciInCoda(ListElement <T> element){
         ListElement <T> current = head;
         while(current.next != null){
@@ -37,7 +37,7 @@ public class GestoreListe <T>{
         current.next = element;
         element.next = null;
     }
-
+    
     public void inserisciInMezzo(ListElement <T> element, int pos){
         if(pos == 0){
             element.next = head;
@@ -46,19 +46,19 @@ public class GestoreListe <T>{
         else{
             ListElement <T> current = head;
             ListElement <T> previous = null;
-        for (int i = 0; i <= pos && current != null; i++) {
-            previous = current;
-            current = current.next;
-        }
+            for (int i = 0; i <= pos && current != null; i++) {
+                previous = current;
+                current = current.next;
+            }
             previous.next = element;
             element.next = current;
         }
     }
-
+    
     public void rimuoviHead(){
         head = head.next;
     }
-
+    
     public void rimuoviNodo(int pos){
         if(pos == 0) rimuoviHead();
         else{
@@ -95,3 +95,5 @@ public class GestoreListe <T>{
         return head;
     }
 }
+
+
