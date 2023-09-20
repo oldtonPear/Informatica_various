@@ -86,7 +86,7 @@ public class GestoreListe <T>{
             current = current.next;
         }
     }
-    /***crea un nuovo nodo alla posizione pos */
+    /**crea un nuovo nodo alla posizione pos */
     public void nuovoNodo(T data, int pos){
         ListElement <T> nuovo = new ListElement<>(data);
         inserisciInMezzo(nuovo, pos);
