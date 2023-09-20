@@ -14,7 +14,7 @@ public class GestoreListe <T>{
         }
         return -1;
     }
-
+    /***printa la lista partendo dalla head passata */
     public void printaLista(ListElement <T> head){
         ListElement <T> current = head;
          while(current != null){
@@ -23,12 +23,12 @@ public class GestoreListe <T>{
          }
          System.out.println("");
     }
-
+    /***inserisci un elemento in testa */
     public void inserisciInTesta(ListElement <T> element){
         element.next = head;
         head = element;
     }
-
+    /***inserisce un elemento in coda */
     public void inserisciInCoda(ListElement <T> element){
         ListElement <T> current = head;
         while(current.next != null){
@@ -37,7 +37,7 @@ public class GestoreListe <T>{
         current.next = element;
         element.next = null;
     }
-
+    /***inseirsce un elemento alla posizione passata */
     public void inserisciInMezzo(ListElement <T> element, int pos){
         if(pos == 0){
             element.next = head;
@@ -54,11 +54,11 @@ public class GestoreListe <T>{
             element.next = current;
         }
     }
-
+    /***rimuove l'elemento in head */
     public void rimuoviHead(){
         head = head.next;
     }
-
+    /***rimuove il nodo alla posizione n */
     public void rimuoviNodo(int pos){
         if(pos == 0) rimuoviHead();
         else{
@@ -72,6 +72,7 @@ public class GestoreListe <T>{
             current = null;
         }
     }
+    /***rimuove il primo nodo che ha come dato il valore passato */
     public void rimuoviPerValore(ListElement <T> element, T valore){
         ListElement <T> current = head;
         ListElement <T> previous = null;
@@ -85,7 +86,7 @@ public class GestoreListe <T>{
             current = current.next;
         }
     }
-    
+    /***crea un nuovo nodo alla posizione pos */
     public void nuovoNodo(T data, int pos){
         ListElement <T> nuovo = new ListElement<>(data);
         inserisciInMezzo(nuovo, pos);
