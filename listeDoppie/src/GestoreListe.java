@@ -1,7 +1,7 @@
 import java.net.http.WebSocket.Listener;
 
 public class GestoreListe <T>{
-    ListElement <T> head;
+    ListElement <T> head = null;
     
     /**cerca se l'elemento è presente nella lista */
     public int cercaElemento(T elemento){
@@ -14,33 +14,22 @@ public class GestoreListe <T>{
         }
         return -1;
     }
-<<<<<<< HEAD
-    
-=======
     /**printa la lista partendo dalla head passata */
->>>>>>> 50a2be8319ff1af54b885337fefa8d80555e21fd
     public void printaLista(ListElement <T> head){
         ListElement <T> current = head;
-        while(current != null){
+         while(current != null){
             System.out.println(current.getData());
             current = current.next;
-        }
-        System.out.println("");
+         }
+         System.out.println("");
     }
-<<<<<<< HEAD
-    
-=======
     /**inserisci un elemento in testa */
->>>>>>> 50a2be8319ff1af54b885337fefa8d80555e21fd
     public void inserisciInTesta(ListElement <T> element){
         element.next = head;
         head = element;
+        head.prev = null;
     }
-<<<<<<< HEAD
-    
-=======
     /**inserisce un elemento in coda */
->>>>>>> 50a2be8319ff1af54b885337fefa8d80555e21fd
     public void inserisciInCoda(ListElement <T> element){
         ListElement <T> current = head;
         while(current.next != null){
@@ -48,52 +37,59 @@ public class GestoreListe <T>{
         }
         current.next = element;
         element.next = null;
+        element.prev = current;
     }
-<<<<<<< HEAD
-    
-=======
     /**inseirsce un elemento alla posizione passata */
->>>>>>> 50a2be8319ff1af54b885337fefa8d80555e21fd
     public void inserisciInMezzo(ListElement <T> element, int pos){
         if(pos == 0){
-            element.next = head;
-            head = element;
+            inserisciInTesta(element);
         }
         else{
             ListElement <T> current = head;
-            ListElement <T> previous = null;
             for (int i = 0; i <= pos && current != null; i++) {
-                previous = current;
                 current = current.next;
             }
-            previous.next = element;
-            element.next = current;
+            if(current == null) inserisciInCoda(element);
+            else{
+                element.next = current.next;
+                current.next.prev = element;
+
+                current.next = element;
+                element.prev = current;
+                
+                
+            }
         }
     }
-<<<<<<< HEAD
-    
-    public void rimuoviHead(){
-        head = head.next;
-    }
-    
-=======
     /**rimuove l'elemento in head */
     public void rimuoviHead(){
         head = head.next;
+        head.prev = null;
+    }
+    
+    public void rimuoviCoda(){
+        ListElement <T> current = head;
+        while(current.next != null){
+            current = current.next;
+        }
+        current.prev.next = null;
+        current = null;
     }
     /**rimuove il nodo alla posizione n */
->>>>>>> 50a2be8319ff1af54b885337fefa8d80555e21fd
     public void rimuoviNodo(int pos){
         if(pos == 0) rimuoviHead();
         else{
             ListElement <T> current = head;
-            ListElement <T> previous = null;
             for (int i = 0; i < pos && current.next != null; i++) {
-                previous = current;
                 current = current.next;
             }
-            previous.next = current.next;
-            current = null;
+            if(current == null) rimuoviCoda();
+            else{
+                current.prev.next = current.next;
+                current.next.prev = current.prev;
+                current = null;
+            }
+            
         }
     }
     /**rimuove il primo nodo che ha come dato il valore passato */
@@ -108,17 +104,61 @@ public class GestoreListe <T>{
             i++;
             previous = current;
             current = current.next;
+            current.prev = previous;
         }
     }
     /**crea un nuovo nodo alla posizione pos */
     public void nuovoNodo(T data, int pos){
         ListElement <T> nuovo = new ListElement<>(data);
-        inserisciInMezzo(nuovo, pos);
+        //inserisciInMezzo(nuovo, pos);
+        inserimentoOrdinato(nuovo);
     }
     
     public ListElement <T> getHead() {
         return head;
     }
+
+    public void controllaAvanti(){
+        ListElement <T> current = head;
+        while(current.next != null){
+            System.out.print(" -> "+ current.getData());
+            current = current.next;
+        }
+        System.out.print(" -> "+ current.getData() + " -> null");
+    }
+
+    public void controllaIndietro(){
+        ListElement <T> current = head;
+        while(current.next != null){
+            current = current.next;
+        }
+        System.out.print("null ");
+        while(current.prev != null){
+            System.out.print(" <- "+ current.getData());
+            current = current.prev;
+            System.out.print(" <- "+ current.getData());
+        }
+        System.out.print(" <-");
+    }
+
+    public void inserimentoOrdinato(ListElement element){
+        if(head == null) inserisciInTesta(element);
+        else if(head.next == null){
+            head.next = element;
+            element.prev = head;
+        }
+        else{
+            ListElement <T> current = head;
+            while(current.next != null){
+                if(current.next.getData().toString().compareTo(element.getData().toString()) >0){
+                    element.next = current.next;
+                    current.next.prev = element;
+
+                    current.next = element;
+                    element.prev = current;
+                    break;
+                }
+            }
+        }
+    }
 }
-
-

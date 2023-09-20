@@ -10,10 +10,15 @@ public class Main {
         ges.nuovoNodo("christian", 2);
         ges.printaLista(ges.getHead());
 
-        //ges.rimuoviNodo(0);
-        ges.rimuoviPerValore(ges.getHead(), "ciao");
+        ges.rimuoviNodo(0);
+        //ges.rimuoviPerValore(ges.getHead(), "christian");
         ges.printaLista(ges.getHead());
 
         System.out.println(ges.cercaElemento("sono"));
+        ges.controllaAvanti();
+        System.out.println("");
+        ges.controllaIndietro();
+
+
     }
 }
