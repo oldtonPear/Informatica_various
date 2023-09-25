@@ -1,6 +1,4 @@
-import java.net.http.WebSocket.Listener;
-
-public class GestoreListe <T>{
+public class GestoreListe <T extends Comparable>   {
     ListElement <T> head = null;
     
     /**cerca se l'elemento è presente nella lista */
@@ -150,15 +148,23 @@ public class GestoreListe <T>{
         else{
             ListElement <T> current = head;
             while(current.next != null){
-                if(current.next.getData().toString().compareTo(element.getData().toString()) >0){
-                    element.next = current.next;
-                    current.next.prev = element;
-
-                    current.next = element;
-                    element.prev = current;
+                if(current.next.getData().compareTo(element.getData()) >0 && current == head){
+                    inserisciInTesta(element);
                     break;
                 }
+                else if(current.next.getData().compareTo(element.getData()) >0){
+                    element.next = current;
+                    element.prev = current.prev;
+
+                    current.prev = element;
+                    element.prev.next = element;
+                    break;
+                }
+                current.prev = current;
+                current = current.next;
+                
             }
         }
     }
+
 }
