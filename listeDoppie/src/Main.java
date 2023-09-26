@@ -1,26 +1,26 @@
 public class Main {
     public static void main(String[] args) {
         GestoreListe <String> ges = new GestoreListe();
-        ges.nuovoNodo("Ciao", 0);
-        ges.printaLista(ges.getHead());
-
-        ges.nuovoNodo("sono", 1);
-        ges.printaLista(ges.getHead());
-
-        ges.nuovoNodo("Christian", 2);
+        ges.nuovoNodo("gigi", 0);
         ges.printaLista(ges.getHead());
         
-        ges.nuovoNodo("Torli", 2);
-
+        ges.nuovoNodo("pino", 1);
+        ges.printaLista(ges.getHead());
+        
+        ges.nuovoNodo("gianni", 2);
+        ges.printaLista(ges.getHead());
+        
+        ges.nuovoNodo("pinotto", 2);
+        
         //ges.rimuoviNodo(1);
         //ges.rimuoviPerValore(ges.getHead(), "christian");
         ges.printaLista(ges.getHead());
-
-        System.out.println(ges.cercaElemento("sono"));
+        
+        System.out.println(ges.cercaElemento("pino"));
         ges.controllaAvanti();
         System.out.println("");
         ges.controllaIndietro();
-
-
+        
+        
     }
 }

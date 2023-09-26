@@ -15,17 +15,18 @@ public class GestoreListe <T extends Comparable>   {
     /**printa la lista partendo dalla head passata */
     public void printaLista(ListElement <T> head){
         ListElement <T> current = head;
-         while(current != null){
+        while(current != null){
             System.out.println(current.getData());
             current = current.next;
-         }
-         System.out.println("");
+        }
+        System.out.println("");
     }
     /**inserisci un elemento in testa */
     public void inserisciInTesta(ListElement <T> element){
         element.next = head;
+        if(head != null) head.prev = element;
         head = element;
-        head.prev = null;
+        
     }
     /**inserisce un elemento in coda */
     public void inserisciInCoda(ListElement <T> element){
@@ -51,11 +52,9 @@ public class GestoreListe <T extends Comparable>   {
             else{
                 element.next = current.next;
                 current.next.prev = element;
-
+                
                 current.next = element;
                 element.prev = current;
-                
-                
             }
         }
     }
@@ -65,6 +64,7 @@ public class GestoreListe <T extends Comparable>   {
         head.prev = null;
     }
     
+    /**rimuove l'elemento in coda alla lista */
     public void rimuoviCoda(){
         ListElement <T> current = head;
         while(current.next != null){
@@ -115,7 +115,8 @@ public class GestoreListe <T extends Comparable>   {
     public ListElement <T> getHead() {
         return head;
     }
-
+    
+    /**mostra visivamente la lista scorrendola dalla head a null */
     public void controllaAvanti(){
         ListElement <T> current = head;
         while(current.next != null){
@@ -124,7 +125,8 @@ public class GestoreListe <T extends Comparable>   {
         }
         System.out.print(" -> "+ current.getData() + " -> null");
     }
-
+    
+    /**mostra visivamente la lista scorrendola da null alla head */
     public void controllaIndietro(){
         ListElement <T> current = head;
         while(current.next != null){
@@ -136,37 +138,38 @@ public class GestoreListe <T extends Comparable>   {
             System.out.print(" <- "+ current.getData());
             current = current.prev;
         }
-        System.out.print(" <- " + head.getData() + " <-");
+        System.out.print(" <-");
         
     }
-
+    
+    /**inserisce element in ordine crescente del dato che sia numerico o tipo stringa */
     public void inserimentoOrdinato(ListElement element){
         if(head == null) inserisciInTesta(element);
         else if(head.next == null){
-            head.next = element;
-            element.prev = head;
-            element.next = null;
-
+            if(head.getData().compareTo(element.getData()) >0){
+                inserisciInTesta(element);
+            }
+            else{
+                head.next = element;
+                element.prev = head;
+                element.next = null;
+            }
         }
         else{
             ListElement <T> current = head;
-            if(current.next.getData().compareTo(element.getData()) >0 && current == head){
-                    inserisciInTesta(element);
-            }
+            if(head.getData().compareTo(element.getData()) >0) inserisciInTesta(element);
             else while(current.next != null){
                 if(current.next.getData().compareTo(element.getData()) >0){
-                    element.prev = current.prev;
-                    element.next = current;
+                    element.next = current.next;
+                    current.next.prev = element;
                     
-                    current.prev = element;
-                    element.prev.next = element;
-                    
+                    current.next = element;
+                    element.prev = current;
                     break;
                 }
                 current = current.next;
             }
-            if(current.next == null) inserisciInCoda(element);
+            if(element.prev == null && element.next == null) inserisciInCoda(element);
         }
     }
-
 }
