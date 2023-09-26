@@ -131,12 +131,13 @@ public class GestoreListe <T extends Comparable>   {
             current = current.next;
         }
         System.out.print("null ");
-        while(current.prev != null){
+        if(current == head) System.out.print(current.getData());
+        while(current != null){
             System.out.print(" <- "+ current.getData());
             current = current.prev;
-            System.out.print(" <- "+ current.getData());
         }
-        System.out.print(" <-");
+        System.out.print(" <- " + head.getData() + " <-");
+        
     }
 
     public void inserimentoOrdinato(ListElement element){
@@ -144,26 +145,27 @@ public class GestoreListe <T extends Comparable>   {
         else if(head.next == null){
             head.next = element;
             element.prev = head;
+            element.next = null;
+
         }
         else{
             ListElement <T> current = head;
-            while(current.next != null){
-                if(current.next.getData().compareTo(element.getData()) >0 && current == head){
+            if(current.next.getData().compareTo(element.getData()) >0 && current == head){
                     inserisciInTesta(element);
-                    break;
-                }
-                else if(current.next.getData().compareTo(element.getData()) >0){
-                    element.next = current;
+            }
+            else while(current.next != null){
+                if(current.next.getData().compareTo(element.getData()) >0){
                     element.prev = current.prev;
-
+                    element.next = current;
+                    
                     current.prev = element;
                     element.prev.next = element;
+                    
                     break;
                 }
-                current.prev = current;
                 current = current.next;
-                
             }
+            if(current.next == null) inserisciInCoda(element);
         }
     }
 
