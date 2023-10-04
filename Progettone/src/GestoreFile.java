@@ -1,36 +1,53 @@
 import java.io.*;
-import java.security.SecureRandom;
+import java.util.Random;
+import java.util.ArrayList;
 public class GestoreFile {
-    
+    FileReader r;
+    FileWriter w;
 
     public void creaFile(){
+        Random random = new Random();
         FileWriter w;
         BufferedWriter writer = null;
+        int numeroFile = 8;
+        int numeroRighe;
         try{
-            for (int i = 0; i <= 10; i++) {
+            for (int i = 0; i <= numeroFile; i++) {
                 w = new FileWriter(new File("src/..", "file" + i + ".txt"));
                 writer = new BufferedWriter(w);
-                String lower = "abcdefghijklmnopqrstuvwxyz";
-                String upper = lower.toUpperCase();
-                String numeri = "0123456789";
-                String perRandom = upper + lower + numeri;
-                int lunghezzaRandom = 20;
-
-                SecureRandom sr = new SecureRandom();
-                StringBuilder sb = new StringBuilder(lunghezzaRandom);
-                for (int j = 0; j < lunghezzaRandom; j++) {
-                    int randomInt = sr.nextInt(perRandom.length());
-                    char randomChar = perRandom.charAt(randomInt);
-                    sb.append(randomChar);
+                numeroRighe = 3 + random.nextInt(8);
+                for (int j = 0; j < numeroRighe; j++) {
+                    writer.write("riga" + j);
+                    writer.newLine();
+                    writer.flush();
                 }
-
-                writer.write(sb.toString());
-                writer.flush();
             }
             writer.close();
         } catch(Exception e){
             System.out.println(e.getCause());
         }
-        
+    }
+    public ArrayList getTxt(){
+        File file = new File("src/..");
+		String[] sFile = file.list();
+        ArrayList<String> result = new ArrayList<>();
+		for (int i = 0; i < sFile.length; i++) {
+            if(sFile[i].contains("file") && sFile[i].contains(".txt")){
+                result.add(sFile[i]);
+            }
+        }
+        return result;
+    }
+    public void scriviSuOutput(String s){
+        BufferedWriter writer;
+        try{
+            w = new FileWriter("Print.txt");
+            writer = new BufferedWriter(w);
+            writer.write(s);
+            writer.flush();
+            writer.close();
+        } catch(Exception e){
+            System.out.println(e.getCause());
+        }
     }
 }
