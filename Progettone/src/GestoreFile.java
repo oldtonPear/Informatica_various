@@ -5,11 +5,11 @@ public class GestoreFile {
     FileReader r;
     FileWriter w;
 
-    public void creaFile(){
+    /***crea un numero di file pari al numero passato e riempiti casualmente */
+    public void creaFile(int numeroFile){
         Random random = new Random();
         FileWriter w;
         BufferedWriter writer = null;
-        int numeroFile = 8;
         int numeroRighe;
         try{
             for (int i = 0; i <= numeroFile; i++) {
@@ -27,7 +27,9 @@ public class GestoreFile {
             System.out.println(e.getCause());
         }
     }
-    public ArrayList getTxt(){
+
+    /***ritorna un arrayList di strighe contenente i nomi di tutti i file di testo generati precedentemente */
+    public ArrayList<String> getTxt(){
         File file = new File("src/..");
 		String[] sFile = file.list();
         ArrayList<String> result = new ArrayList<>();
@@ -38,16 +40,5 @@ public class GestoreFile {
         }
         return result;
     }
-    public void scriviSuOutput(String s){
-        BufferedWriter writer;
-        try{
-            w = new FileWriter("Print.txt");
-            writer = new BufferedWriter(w);
-            writer.write(s);
-            writer.flush();
-            writer.close();
-        } catch(Exception e){
-            System.out.println(e.getCause());
-        }
-    }
+
 }

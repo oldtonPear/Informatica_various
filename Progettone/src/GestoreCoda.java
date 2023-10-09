@@ -2,50 +2,52 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 public class GestoreCoda {
-    private Node head;
-    GestoreFile gesFile = new GestoreFile();
+
+    public class Node {
+        private File data;
+        private Node next;
     
-    public Node getHead() {
-        return head;
-    }
-    public void setHead(Node head) {
-        this.head = head;
-    }
-    public Node getLast(){
-        if(head == null){
-            System.out.println("Non sono presenti elementi");
-            return null;
-        } 
-        else if(head.getNext() == null) return head;
-        else{
-            Node current = head;
-            while(current.getNext() != null){
-                current = current.getNext();
-            }
-            return current;
+        Node(File data){
+            this.data = data;
+            next = null;
+        }
+        public Node getNext() {
+        return next;
+        }
+        public File getData() {
+            return data;
         }
     }
 
+    private Node head;
+    private Node tail;
+    GestoreFile gesFile = new GestoreFile();
+
+    public Node getHead() {
+        return head;
+    }
+    public Node getTail() {
+        return tail;
+    }
+    /***inserisce un nuovo nodo nella coda */
     public void inserimento(File f){
         Node n = new Node(f);
-        if(head == null) head = n;
-        else{
-            n.setNext(head);
+        if(head == null && tail == null){
             head = n;
+            tail = n;
+        }
+        else{
+            tail.next = n;
+            tail = n;
         }
     }
+
+    /***rimuove un nodo dalla coda */
     public void rimozione(){
         if(head == null) System.out.println("Non sono presenti elementi");
-        else if(head.getNext() == null) head = null;
+        else if(head.next == null) head = null;
         else{
-            Node prev = null;
-            Node current = head;
-            while(current.getNext() != null){
-                prev = current;
-                current = current.getNext();
-            }
-            prev.setNext(null);
-            current = null;
+            head = head.next;
         }
     }
     public void creaCoda(){
@@ -58,18 +60,21 @@ public class GestoreCoda {
     public void printaCoda(){
         Node current = head;
             while(current != null){
-                System.out.println(current.getData());
-                current = current.getNext();
+                System.out.println(current.data);
+                current = current.next;
             }
             System.out.println("");
     }
+    
+    
+    /* con coda rovescia
     public void creaFileStampa(){
         String s, result = "";
         FileReader r;
         BufferedReader reader;
         while(getLast() != null){
             try{
-                r = new FileReader(getLast().getData());
+                r = new FileReader(getLast().data);
                 reader = new BufferedReader(r);
                 result +="*****INIZIO*****" + "\n";
                 s = reader.readLine();
@@ -85,4 +90,5 @@ public class GestoreCoda {
             rimozione();
         }
     }
+    */
 }
