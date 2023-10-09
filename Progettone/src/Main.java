@@ -1,17 +1,21 @@
-import java.util.ArrayList;
 import java.io.*;
+import java.util.Scanner;
 public class Main {
     static GestoreFile gesFile = new GestoreFile();
     static GestoreCoda gesCoda = new GestoreCoda();
+    static GestoreMap gesMap = new GestoreMap();
     public static void main(String[] args) {
-        
+        Scanner scn = new Scanner(System.in);
         gesFile.creaFile(8);
         gesCoda.creaCoda();
         gesCoda.printaCoda();
         creaFileStampa();
+        gesMap.riempi();
+        System.out.println("\nche parola vuoi cercare?");
+        creaFilteredPrintQueue(scn.nextLine());
     }
 
-    /*** */
+    /***scrive il contenuto dei file di testo in un file "Print.txt" */
     public static void creaFileStampa(){
         String s, result = "";
         FileReader r;
@@ -41,6 +45,20 @@ public class Main {
             FileWriter w = new FileWriter("Print.txt");
             writer = new BufferedWriter(w);
             writer.write(s);
+            writer.flush();
+            writer.close();
+        } catch(Exception e){
+            System.out.println(e.getCause());
+        }
+    }
+
+    public static void creaFilteredPrintQueue(String s){
+        String parole = gesMap.cercaParola(s);
+        BufferedWriter writer;
+        try{
+            FileWriter w = new FileWriter("FilteredPrintQueue.txt");
+            writer = new BufferedWriter(w);
+            writer.write(parole);
             writer.flush();
             writer.close();
         } catch(Exception e){

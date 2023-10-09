@@ -1,6 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 public class GestoreCoda {
 
     public class Node {
@@ -65,30 +64,4 @@ public class GestoreCoda {
             }
             System.out.println("");
     }
-    
-    
-    /* con coda rovescia
-    public void creaFileStampa(){
-        String s, result = "";
-        FileReader r;
-        BufferedReader reader;
-        while(getLast() != null){
-            try{
-                r = new FileReader(getLast().data);
-                reader = new BufferedReader(r);
-                result +="*****INIZIO*****" + "\n";
-                s = reader.readLine();
-			    while(s!=null){
-                    result += s + "\n";
-				    s=reader.readLine();
-			    }
-            result +="***** FINE *****" + "\n";
-            }catch(Exception e){
-                System.out.println(e.getCause());
-            }
-            gesFile.scriviSuOutput(result);
-            rimozione();
-        }
-    }
-    */
 }
