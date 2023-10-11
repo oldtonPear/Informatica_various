@@ -13,6 +13,7 @@ public class Main {
         gesMap.riempi();
         System.out.println("\nche parola vuoi cercare?");
         creaFilteredPrintQueue(scn.nextLine());
+        scn.close();
     }
 
     /***scrive il contenuto dei file di testo in un file "Print.txt" */

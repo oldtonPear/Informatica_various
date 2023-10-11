@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class GestoreMap {
     HashMap<String, ArrayList<File>> map = new HashMap<>();
