@@ -1,7 +1,9 @@
+import java.io.File;
+
 public class Main {
-    private static GestoreFile gesFile = new GestoreFile();
-    private static GestoreMap gesMap = new GestoreMap();
+    
     public static void main(String[] args) {
-        gesMap.riempi();
+        Utility.init();
+        System.out.println(Utility.calcoloTF_IDF("il", new File("file1.txt")));
     }
 }

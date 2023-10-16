@@ -5,37 +5,36 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class GestoreMap {
-    HashMap<String, ArrayList<File>> map = new HashMap<>();
+    static HashMap<String, ArrayList<File>> map = new HashMap<>();
 
     public void riempi(){
-        GestoreFile ges = new GestoreFile();
-        ArrayList<String> listaNomi = ges.ottieniNomiFile();
+        GestoreFile gesFile = Utility.getGesFile();
+        ArrayList<String> listaNomi = gesFile.ottieniNomiFile();
         String riga = "";
         for (String s : listaNomi) {
             File f = new File(s);
             try{
-                FileReader reader = new FileReader(f);
-                BufferedReader br = new BufferedReader(reader);
-                riga = br.readLine();
+                gesFile.setfReader(new FileReader(f));
+                gesFile.setbReader(new BufferedReader(gesFile.getfReader()));
+                riga = gesFile.getbReader().readLine();
                 String[] arrRiga = riga.split(" ");
                 while(riga != null){
                     for (int i = 0; i < arrRiga.length; i++) {
                         if(map.get(arrRiga[i]) == null){
-                        map.put(arrRiga[i], new ArrayList<>());
-                        map.get(arrRiga[i]).add(f);
+                            map.put(arrRiga[i], new ArrayList<File>());
+                            map.get(arrRiga[i]).add(f);
                         }
-                        else map.get(arrRiga[i]).add(f);
+                        else if(!(map.get(arrRiga[i]).contains(f.toString()))){
+                            map.get(arrRiga[i]).add(f);
+                        } 
                     }
-                    riga = br.readLine();
+                    riga = gesFile.getbReader().readLine();
                     if(riga != null) arrRiga = riga.split(" ");
                 }
             }catch(Exception e){
                 System.out.println(e.getLocalizedMessage());
+                e.printStackTrace();
             }
         }
-    }
-    public String cercaParola(String parola){
-        if(map.get(parola) == null) return "";
-        return map.get(parola).toString();
     }
 }

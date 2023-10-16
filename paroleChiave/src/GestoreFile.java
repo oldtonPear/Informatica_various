@@ -4,8 +4,21 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class GestoreFile {
-    FileReader fReader;
-    BufferedReader bReader;
+    private FileReader fReader;
+    private BufferedReader bReader;
+
+    public BufferedReader getbReader() {
+        return bReader;
+    }
+    public FileReader getfReader() {
+        return fReader;
+    }
+    public void setfReader(FileReader fReader) {
+        this.fReader = fReader;
+    }
+    public void setbReader(BufferedReader bReader) {
+        this.bReader = bReader;
+    }
     
     /**ritorna un arrayList contenente stringhe con i nomi di tutti i file .txt */
     public ArrayList<String> ottieniNomiFile(){
@@ -32,28 +45,5 @@ public class GestoreFile {
         return result;
     }
 
-    public double calcoloTF(File file, String parola){
-        int numeroDiTermini = 0, numeroOccorrenze = 0;
-        try{
-            fReader = new FileReader(file);
-            bReader = new BufferedReader(bReader);
-
-
-        }catch(Exception e){
-            System.out.println(e.getLocalizedMessage());
-        }
-
-        return numeroOccorrenze / Math.abs(numeroDiTermini);
-    }
-
-    public double calcoloIDF(String parola){{
-        GestoreMap gesMap = new GestoreMap();
-        int numeroDocumenti = ottieniNumeroFile(), numeroDocumentiConI = gesMap.map.get(parola).size();
-
-
-
-        return  Math.log10(Math.abs(numeroDocumenti) / Math.abs(numeroDocumentiConI));
-    }
-
-    }
+    
 }
