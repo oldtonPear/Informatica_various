@@ -33,7 +33,8 @@ public class Utility {
                 }
 
         }catch(Exception e){
-            System.out.println(e.getLocalizedMessage());
+            System.out.println("Inserisci il nome di un file adeguato!!\n\n\n");
+            Main.menu();
         }
 
         return numeroOccorrenze / Math.abs(numeroDiTermini);
@@ -41,7 +42,13 @@ public class Utility {
 
     public static double calcoloIDF(String parola){
         double numeroDocumenti = gesFile.ottieniNumeroFile(), numeroDocumentiConI = 1;
-        numeroDocumentiConI = gesMap.map.get(parola).size();
+        try{
+            numeroDocumentiConI = gesMap.map.get(parola).size();
+        }catch(NullPointerException e){
+            System.out.println("PAROLA NON TROVATA\n\n\n");
+            Main.menu();
+        }
+        
 
         return  Math.log10(Math.abs(numeroDocumenti) / Math.abs(numeroDocumentiConI));
     }

@@ -24,7 +24,7 @@ public class GestoreMap {
                             map.put(arrRiga[i], new ArrayList<File>());
                             map.get(arrRiga[i]).add(f);
                         }
-                        else if(!(map.get(arrRiga[i]).contains(f.toString()))){
+                        else if(!(checkData(map.get(arrRiga[i]), f))){
                             map.get(arrRiga[i]).add(f);
                         } 
                     }
@@ -36,5 +36,11 @@ public class GestoreMap {
                 e.printStackTrace();
             }
         }
+    }
+    public boolean checkData(ArrayList<File> arrList, File f){
+        for (File file : arrList) {
+            if(file == f) return true;
+        }
+        return false;
     }
 }
