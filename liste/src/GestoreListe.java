@@ -10,7 +10,7 @@ public class GestoreListe <T>{
         while(current != null){
             if(current.getData() == elemento) return i;
             i++;
-            current = current.next;
+            current = current.getNext();
         }
         return -1;
     }
@@ -19,28 +19,28 @@ public class GestoreListe <T>{
         ListElement <T> current = head;
         while(current != null){
             System.out.println(current.getData());
-            current = current.next;
+            current = current.getNext();
         }
         System.out.println("");
     }
     /**inserisci un elemento in testa */
     public void inserisciInTesta(ListElement <T> element){
-        element.next = head;
+        element.setNext(head);
         head = element;
     }
     /**inserisce un elemento in coda */
     public void inserisciInCoda(ListElement <T> element){
         ListElement <T> current = head;
-        while(current.next != null){
-            current = current.next;
+        while(current.getData() != null){
+            current = current.getNext();
         }
-        current.next = element;
-        element.next = null;
+        current.setNext(element);
+        element.setNext(null);
     }
     /**inseirsce un elemento alla posizione passata */
     public void inserisciInMezzo(ListElement <T> element, int pos){
         if(pos == 0){
-            element.next = head;
+            element.setNext(head);
             head = element;
         }
         else{
@@ -48,15 +48,15 @@ public class GestoreListe <T>{
             ListElement <T> previous = null;
             for (int i = 0; i <= pos && current != null; i++) {
                 previous = current;
-                current = current.next;
+                current = current.getNext();
             }
-            previous.next = element;
-            element.next = current;
+            previous.setNext(element);
+            element.setNext(current);
         }
     }
     /**rimuove l'elemento in head */
     public void rimuoviHead(){
-        head = head.next;
+        head = head.getNext();
     }
     /**rimuove il nodo alla posizione n */
     public void rimuoviNodo(int pos){
@@ -64,11 +64,11 @@ public class GestoreListe <T>{
         else{
             ListElement <T> current = head;
             ListElement <T> previous = null;
-            for (int i = 0; i < pos && current.next != null; i++) {
+            for (int i = 0; i < pos && current.getNext() != null; i++) {
                 previous = current;
-                current = current.next;
+                current = current.getNext();
             }
-            previous.next = current.next;
+            previous.setNext(current.getNext());
             current = null;
         }
     }
@@ -77,13 +77,13 @@ public class GestoreListe <T>{
         ListElement <T> current = head;
         ListElement <T> previous = null;
         int i = 0;
-        while(current.next != null){
+        while(current.getNext() != null){
             if(current.getData() == valore){
                 rimuoviNodo(i);
             }
             i++;
             previous = current;
-            current = current.next;
+            current = current.getNext();
         }
     }
     /**crea un nuovo nodo alla posizione pos */
