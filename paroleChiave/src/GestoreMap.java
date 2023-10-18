@@ -10,6 +10,7 @@ public class GestoreMap {
     static ArrayList<String> arrKeySet = new ArrayList<>();
 
     public void riempi(){
+        
         GestoreFile gesFile = Utility.getGesFile();
         ArrayList<String> listaNomi = gesFile.ottieniNomiFile();
         String riga = "";
@@ -20,19 +21,23 @@ public class GestoreMap {
                 gesFile.setfReader(new FileReader(f));
                 gesFile.setbReader(new BufferedReader(gesFile.getfReader()));
                 riga = gesFile.getbReader().readLine();
+                riga = riga.replaceAll("[^a-zA-Z0-9]", " ");
                 String[] arrRiga = riga.split(" ");
                 while(riga != null){
                     for (int i = 0; i < arrRiga.length; i++) {
                         if(!map.containsKey(arrRiga[i])){
                             map.put(arrRiga[i], new ArrayList<File>());
                             map.get(arrRiga[i]).add(f);
-                            arrKeySet.add(arrRiga[i]);
                         }
-                        else map.get(arrRiga[i]).add(f);
                     }
                     riga = gesFile.getbReader().readLine();
-                    if(riga != null) arrRiga = riga.split(" ");
+                    if(riga != null){
+                        riga = riga.replaceAll("[^a-zA-Z0-9]", " ");
+                        arrRiga = riga.split(" ");
+                    } 
                 }
+                
+                
             }catch(Exception e){
                 System.out.println(e.getLocalizedMessage());
                 e.printStackTrace();
@@ -55,14 +60,13 @@ public class GestoreMap {
                 tfidf += Utility.calcoloTF_IDF(s, f);
                 
             }
-            //if(mapImportanza.get(s) == null) mapImportanza.put(s, tfidf);
-            System.out.println(s);
+            mapImportanza.put(s, tfidf);
             tfidf = 0;
         }
     }
     public void printaTfidf(){
         for (String s : arrKeySet) {
-            System.out.println(s);
+            System.out.println(s +" "+ mapImportanza.get(s));
         }
     }
 }
