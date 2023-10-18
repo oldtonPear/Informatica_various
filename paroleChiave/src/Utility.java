@@ -15,6 +15,7 @@ public class Utility {
 
     public static void init(){
         gesMap.riempi();
+        gesMap.riempiMapImportanza();
     }
     public static double calcoloTF(File file, String parola){
         double numeroDiTermini = 0, numeroOccorrenze = 0;
@@ -48,11 +49,13 @@ public class Utility {
             System.out.println("PAROLA NON TROVATA\n\n\n");
             Main.menu();
         }
-        
-
         return  Math.log10(Math.abs(numeroDocumenti) / Math.abs(numeroDocumentiConI));
     }
     public static double calcoloTF_IDF(String parola, File file){
         return calcoloTF(file, parola) * calcoloIDF(parola);
+    }
+
+    public static void printaImportanza(){
+        gesMap.printaTfidf();
     }
 }

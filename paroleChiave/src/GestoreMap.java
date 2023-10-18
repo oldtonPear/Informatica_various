@@ -6,11 +6,14 @@ import java.util.HashMap;
 
 public class GestoreMap {
     static HashMap<String, ArrayList<File>> map = new HashMap<>();
+    static HashMap<String, Double> mapImportanza = new HashMap<>();
+    static ArrayList<String> arrKeySet = new ArrayList<>();
 
     public void riempi(){
         GestoreFile gesFile = Utility.getGesFile();
         ArrayList<String> listaNomi = gesFile.ottieniNomiFile();
         String riga = "";
+        System.out.println("Caricamento risorse, attendi prego");
         for (String s : listaNomi) {
             File f = new File(s);
             try{
@@ -20,13 +23,12 @@ public class GestoreMap {
                 String[] arrRiga = riga.split(" ");
                 while(riga != null){
                     for (int i = 0; i < arrRiga.length; i++) {
-                        if(map.get(arrRiga[i]) == null){
+                        if(!map.containsKey(arrRiga[i])){
                             map.put(arrRiga[i], new ArrayList<File>());
                             map.get(arrRiga[i]).add(f);
+                            arrKeySet.add(arrRiga[i]);
                         }
-                        else if(!(checkData(map.get(arrRiga[i]), f))){
-                            map.get(arrRiga[i]).add(f);
-                        } 
+                        else map.get(arrRiga[i]).add(f);
                     }
                     riga = gesFile.getbReader().readLine();
                     if(riga != null) arrRiga = riga.split(" ");
@@ -36,11 +38,31 @@ public class GestoreMap {
                 e.printStackTrace();
             }
         }
-    }
-    public boolean checkData(ArrayList<File> arrList, File f){
-        for (File file : arrList) {
-            if(file == f) return true;
+        for (String s : map.keySet()) {
+            arrKeySet.add(s);
         }
-        return false;
+    }
+
+    public void riempiMapImportanza(){
+        double tfidf = 0;
+        double progress = 0, i = 0;
+        long size = arrKeySet.size();
+        for (String s : arrKeySet) {
+            i++;
+            progress = i/size*100;
+            System.out.println(String.format("%.2f", progress) + "%");
+            for (File f : map.get(s)) {
+                tfidf += Utility.calcoloTF_IDF(s, f);
+                
+            }
+            //if(mapImportanza.get(s) == null) mapImportanza.put(s, tfidf);
+            System.out.println(s);
+            tfidf = 0;
+        }
+    }
+    public void printaTfidf(){
+        for (String s : arrKeySet) {
+            System.out.println(s);
+        }
     }
 }
