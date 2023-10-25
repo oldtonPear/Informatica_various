@@ -75,8 +75,26 @@ public class Grafo <T> {
         return node;
     }
     public boolean isConnected(){
-        int nArchi;
-        if(nArchi == numeroArchi()) return true;
+        T prevKey = null;
+        for (T key : map.keySet()) {
+            if(prevKey != null){
+                HashMap mapTrovati = new HashMap<T, Boolean>();
+                
+                if(!controllaAdiacenti(prevKey, key, mapTrovati)) return false;
+            }
+            prevKey = key;
+        }
+        
         return true;
+    }
+    private boolean controllaAdiacenti(T node, T node2, HashMap trovati){
+        if(map.get(node).contains(node2)) return true;
+        for (T key : map.get(node)) {
+            if(trovati.get(key) == null){ 
+                trovati.put(node, true);
+                return false || controllaAdiacenti(key, node2, trovati);
+            }
+        }
+        return false;
     }
 }
