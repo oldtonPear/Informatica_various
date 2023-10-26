@@ -75,24 +75,29 @@ public class Grafo <T> {
         return node;
     }
     public boolean isConnected(){
-        T prevKey = null;
-        for (T key : map.keySet()) {
-            if(prevKey != null){
+        for (T firstKey : map.keySet()) {
+            for (T secondKey : map.keySet()) {
+                if(firstKey != secondKey){
                 HashMap mapTrovati = new HashMap<T, Boolean>();
-                
-                if(!controllaAdiacenti(prevKey, key, mapTrovati)) return false;
+                if(!controllaAdiacenti(firstKey, secondKey, mapTrovati)) return false;
+                }
             }
-            prevKey = key;
         }
-        
         return true;
     }
     private boolean controllaAdiacenti(T node, T node2, HashMap trovati){
-        if(map.get(node).contains(node2)) return true;
+        trovati.put(node, true);
+        if(map.get(node).contains(node2)){
+            return true;
+        } 
         for (T key : map.get(node)) {
             if(trovati.get(key) == null){ 
-                trovati.put(node, true);
-                return false || controllaAdiacenti(key, node2, trovati);
+                if(controllaAdiacenti(key, node2, trovati)) return true;
+                else{
+                    for (T n : map.get(node)) {
+                        if(trovati.get(n) == null) return false || controllaAdiacenti(n, node2, trovati);
+                    }
+                }  
             }
         }
         return false;
