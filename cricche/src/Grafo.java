@@ -2,14 +2,14 @@ import java.util.*;
 
 public class Grafo <T> {
     private HashMap<T, LinkedList<T>> map = new HashMap<>();
-    private HashMap<Integer, LinkedList<T>> cricche = new HashMap<>();
 
     /**crea un nuovo vertice */
     private void nuovoVertice(T vertice){
         map.put(vertice, new LinkedList<>());
     }
 
-    /**collega due vertici e li crea se non esistono */
+    /**collega due vertici e li crea se non esistono
+     */
     public void collega(T vertice1, T vertice2, boolean bidirezionale){
         if(map.get(vertice1) == null) nuovoVertice(vertice1);
         if(map.get(vertice2) == null) nuovoVertice(vertice2);
@@ -139,15 +139,10 @@ public class Grafo <T> {
         }
         return false;
     }
-    private HashMap<T, Boolean> esplorati = new HashMap<>();
-    public HashMap<Integer, LinkedList<T>> cercaCricche(){
-        for (T firstKey : map.keySet()) {
-            for (T element : map.get(firstKey)) {
-                if(!map.containsKey(element)) break;
-            }
-        }
 
-
-        return cricche;
+    /**Dijkstra */
+    public HashMap<T, Integer> Dijkstra(){
+        HashMap<T, Integer> percorsiMinimi = new HashMap<>();
+        return percorsiMinimi;
     }
 }
