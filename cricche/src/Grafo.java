@@ -1,30 +1,54 @@
 import java.util.*;
 
 public class Grafo <T> {
-    private HashMap<T, LinkedList<T>> map = new HashMap<>();
+    private HashMap<Nodo<T>, LinkedList<Nodo<T>>> map = new HashMap<>();
 
     /**crea un nuovo vertice */
-    private void nuovoVertice(T vertice){
+    private void nuovoVertice(Nodo<T> vertice){
         map.put(vertice, new LinkedList<>());
     }
 
-    /**collega due vertici e li crea se non esistono
-     */
-    public void collega(T vertice1, T vertice2, boolean bidirezionale){
-        if(map.get(vertice1) == null) nuovoVertice(vertice1);
-        if(map.get(vertice2) == null) nuovoVertice(vertice2);
-        if(!bidirezionale) map.get(vertice1).add(vertice2);
+    /**collega due vertici e li crea se non esistono, specificare il peso*/
+    public void collega(T vertice1, T vertice2, boolean bidirezionale, double peso){
+        if(map.get(vertice1) == null) nuovoVertice(new Nodo<T>(vertice1, peso));
+        if(map.get(vertice2) == null) nuovoVertice(new Nodo<T>(vertice2, peso));
+        if(!bidirezionale) map.get(vertice1).add(new Nodo<T>(vertice2, peso));
         else{
-            map.get(vertice2).add(vertice1);
-            map.get(vertice1).add(vertice2);
+            map.get(vertice2).add(new Nodo<T>(vertice1, peso));
+            map.get(vertice1).add(new Nodo<T>(vertice2, peso));
+        }
+    }
+
+    private Nodo<T> ritornaNodo(T vertice){
+        Nodo<T> v = null;
+        for (Nodo<T> key : map.keySet()) {
+            if(key.getData() == vertice) v = key;
+        }
+        if(v == null) v = new Nodo<>(vertice);
+        return v;
+    }
+
+    /**collega due vertici e li crea se non esistono, peso = 1*/
+    public void collega(T vertice1, T vertice2, boolean bidirezionale){
+        Nodo<T> v1 = ritornaNodo(vertice1), v2 = ritornaNodo(vertice2);
+        
+        map.putIfAbsent(v1, new LinkedList<>());
+        map.putIfAbsent(v2, new LinkedList<>());
+        if(!bidirezionale) map.get(v1).add(v2);
+        else{
+            map.get(v1).add(v2);
+            map.get(v2).add(v1);
         }
     }
 
     /**restituisce una rappresentazione in stringa del grafo */
     public String toString(){
         String s = "";
-        for (T key : map.keySet()) {
-            s += key + ": " + map.get(key).toString();
+        for (Nodo<T> key : map.keySet()) {
+            s += key.getData() + ": ";
+            for (Nodo<T> element : map.get(key)) {
+                s += " " + element.getData() + " " + element.getPeso() + "|";
+            }
             s+= "\n";
         }
         return s;
@@ -34,7 +58,7 @@ public class Grafo <T> {
     public boolean esistenzaVertice(T vertice){
         if(map.containsKey(vertice)) return true;
         else{
-            for (T key : map.keySet()) {
+            for (Nodo<T> key : map.keySet()) {
                 if(map.get(key).contains(vertice)) return true;
             }
         }
@@ -54,7 +78,7 @@ public class Grafo <T> {
     /**ritorna il numero di archi del grafo */
     public int numeroArchi(){
         int n = 0;
-        for (T key : map.keySet()) {
+        for (Nodo<T> key : map.keySet()) {
                 n += map.get(key).size();
             }
         return n;
@@ -82,10 +106,10 @@ public class Grafo <T> {
     }
 
     /**ritorna il vertice di ordine maggiore */
-    public T maxOrder(){
+    public Nodo<T> maxOrder(){
         int maxOrder = 0;
-        T node = null;
-        for (T key : map.keySet()) {
+        Nodo<T> node = null;
+        for (Nodo<T> key : map.keySet()) {
             if(map.get(key).size() > maxOrder){
                 maxOrder = map.get(key).size(); 
                 node=key;
@@ -95,10 +119,10 @@ public class Grafo <T> {
     }
 
     /**ritorna il vertice di ordine minore */
-    public T minOrder(){
+    public Nodo<T> minOrder(){
         int minOrder = -1;
-        T node = null;
-        for (T key : map.keySet()) {
+        Nodo<T> node = null;
+        for (Nodo<T> key : map.keySet()) {
             if(minOrder == -1) minOrder = map.get(key).size(); 
             if(map.get(key).size() < minOrder){
                 minOrder = map.get(key).size(); 
@@ -110,10 +134,10 @@ public class Grafo <T> {
 
     /**ritorna true se il grafo è connesso */
     public boolean isConnected(){
-        for (T firstKey : map.keySet()) {
-            for (T secondKey : map.keySet()) {
+        for (Nodo<T> firstKey : map.keySet()) {
+            for (Nodo<T> secondKey : map.keySet()) {
                 if(firstKey != secondKey){
-                HashMap mapTrovati = new HashMap<T, Boolean>();
+                HashMap<Nodo<T>, Boolean> mapTrovati = new HashMap<>();
                 if(!controllaConnessione(firstKey, secondKey, mapTrovati)) return false;
                 }
             }
@@ -122,16 +146,16 @@ public class Grafo <T> {
     }
 
     /**restituisce true se esiste una connessione tra due nodi passati */
-    private boolean controllaConnessione(T node, T node2, HashMap<T, Boolean> trovati){
+    private boolean controllaConnessione(Nodo<T> node, Nodo<T> node2, HashMap<Nodo<T>, Boolean> trovati){
         trovati.put(node, true);
         if(map.get(node).contains(node2)){
             return true;
         } 
-        for (T key : map.get(node)) {
+        for (Nodo<T> key : map.get(node)) {
             if(trovati.get(key) == null){ 
                 if(controllaConnessione(key, node2, trovati)) return true;
                 else{
-                    for (T n : map.get(node)) {
+                    for (Nodo<T> n : map.get(node)) {
                         if(trovati.get(n) == null) return false || controllaConnessione(n, node2, trovati);
                     }
                 }  
@@ -139,10 +163,54 @@ public class Grafo <T> {
         }
         return false;
     }
+    HashMap<Nodo<T>, Double> dist;
+    HashMap<Nodo<T>, Nodo<T>> prev;
 
     /**Dijkstra */
-    public HashMap<T, Integer> Dijkstra(){
-        HashMap<T, Integer> percorsiMinimi = new HashMap<>();
-        return percorsiMinimi;
+    public void Dijkstra(Nodo<T> source){
+        double alt = 0d;
+        dist = new HashMap<>();
+        prev = new HashMap<>();
+        ArrayList<Nodo<T>> q = new ArrayList<>();
+        for (Nodo<T> vertex : map.keySet()) {
+            Double positiveInfinity = Double.POSITIVE_INFINITY;
+            dist.put(vertex, positiveInfinity);
+            q.add(vertex);
+        }
+        dist.put(source, 0d);
+        
+        while(q.size() != 0){
+            Nodo<T> u = nodoDistMinore(q);
+            q.remove(u);
+            for (Nodo<T> neighbor : map.get(u)) {
+                if(!q.contains(neighbor)) continue;
+                alt = dist.get(u) + 1;
+                if(alt < dist.get(neighbor)){
+                    dist.put(neighbor, alt);
+                    prev.put(neighbor, u);
+                }
+            }
+        }
+    }
+
+    private Nodo<T> nodoDistMinore(ArrayList<Nodo<T>> q){
+        int pos = 0;
+        double minore = dist.get(q.get(0));
+        int i =0;
+        for (Nodo<T> t : q) {
+            if(dist.get(t) < minore){
+                pos = i;
+                minore = dist.get(t);
+            }
+            i++;
+        }
+        return q.get(pos);
+    }
+
+    public HashMap<Nodo<T>, Double> getDist() {
+        return dist;
+    }
+    public HashMap<Nodo<T>, Nodo<T>> getPrev() {
+        return prev;
     }
 }
