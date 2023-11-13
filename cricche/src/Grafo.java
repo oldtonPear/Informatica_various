@@ -1,4 +1,8 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.util.*;
+
+import com.google.gson.Gson;
 
 public class Grafo <T> {
     private HashMap<Nodo<T>, LinkedList<Nodo<T>>> map = new HashMap<>();
@@ -191,6 +195,7 @@ public class Grafo <T> {
                 }
             }
         }
+
     }
 
     private Nodo<T> nodoDistMinore(ArrayList<Nodo<T>> q){
@@ -216,5 +221,24 @@ public class Grafo <T> {
         for (Nodo<T> key  : prev.keySet()) {
             System.out.println(key.getData() + " " + prev.get(key).getData());
         }
+    }
+    @SuppressWarnings("unchecked")
+    public void faiCoseConJson(){
+        Gson gson = new Gson();
+        Nodo<T>[] nodi= (Nodo<T>[])map.keySet().toArray();
+        
+        String json = gson.toJson(map);
+        System.out.println(json);
+        try{
+            BufferedWriter writer = new BufferedWriter(new FileWriter("../graph.json"));
+            writer.write(json);
+            writer.flush();
+            writer.close();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        
+        
     }
 }
