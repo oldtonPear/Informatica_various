@@ -166,7 +166,7 @@ public class Grafo <T> {
     HashMap<Nodo<T>, Double> dist;
     HashMap<Nodo<T>, Nodo<T>> prev;
 
-    /**Dijkstra */
+    /**Aggiorna il i valori a partire da source */
     public void Dijkstra(Nodo<T> source){
         double alt = 0d;
         dist = new HashMap<>();
@@ -207,10 +207,14 @@ public class Grafo <T> {
         return q.get(pos);
     }
 
-    public HashMap<Nodo<T>, Double> getDist() {
-        return dist;
+    public void printDist() {
+        for (Nodo<T> key  : dist.keySet()) {
+            System.out.println(key.getData() + " " + dist.get(key));
+        }
     }
-    public HashMap<Nodo<T>, Nodo<T>> getPrev() {
-        return prev;
+    public void printPrev() {
+        for (Nodo<T> key  : prev.keySet()) {
+            System.out.println(key.getData() + " " + prev.get(key).getData());
+        }
     }
 }

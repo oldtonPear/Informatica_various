@@ -1,13 +1,15 @@
 public class Main {
     public static void main(String[] args) {
         Grafo<String> g = new Grafo<>();
-        g.collega("Torino", "Milano", true);
-        g.collega("Mestre", "Milano", true);
-        g.collega("Catanzaro", "Messina", true);
+        g.collega("Torino", "Milano", false);
+        g.collega("Mestre", "Milano", false);
+        g.collega("Mestre", "Catanzaro", false);
+        g.collega("Catanzaro", "Messina", false);
         System.out.println(g.toString());
         System.out.println(g.isConnected());
         g.Dijkstra(g.maxOrder());
-        System.out.println(g.getDist().values());
-        System.out.println(g.getPrev().values());
+        g.printDist();
+        System.out.println("");
+        g.printPrev();
     }
 }
