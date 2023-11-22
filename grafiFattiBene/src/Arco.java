@@ -18,4 +18,7 @@ public class Arco <T>{
         public Nodo<T> getNodo2() {
             return nodo2;
         }
+        public double getValue() {
+            return value;
+        }
     }

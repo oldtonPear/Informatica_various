@@ -66,13 +66,13 @@ public class Grafo <T>{
         if(esisteArco(node, node2)){
             return true;
         } 
-        for (Arco<T> key : archi) {
-            if(trovati.get(node) == null){ 
-                if(controllaConnessione(key.getNodo1(), node2, trovati)) return true;
+        for (Arco<T> key : archiChePartonoDa(node)) {
+            if(trovati.get(key.getNodo2()) == null){ 
+                if(controllaConnessione(key.getNodo2(), node2, trovati)) return true;
                 else{
-                    //for (Nodo<T> n : map.get(node)) {
-                        //if(trovati.get(n) == null) return false || controllaConnessione(n, node2, trovati);
-                    //}
+                    for (Nodo<T> n : nodi) {
+                        if(trovati.get(n) == null) return false || controllaConnessione(n, node2, trovati);
+                    }
                 }  
             }
         }
@@ -88,12 +88,12 @@ public class Grafo <T>{
     HashMap<Nodo<T>, Nodo<T>> prev;
 
     /**Aggiorna il i valori a partire da source */
-    /*public void Dijkstra(Nodo<T> source){
+    public void Dijkstra(Nodo<T> source){
         double alt = 0d;
         dist = new HashMap<>();
         prev = new HashMap<>();
         ArrayList<Nodo<T>> q = new ArrayList<>();
-        for (Nodo<T> vertex : map.keySet()) {
+        for (Nodo<T> vertex : nodi) {
             Double positiveInfinity = Double.POSITIVE_INFINITY;
             dist.put(vertex, positiveInfinity);
             q.add(vertex);
@@ -103,16 +103,24 @@ public class Grafo <T>{
         while(q.size() != 0){
             Nodo<T> u = nodoDistMinore(q);
             q.remove(u);
-            for (Nodo<T> neighbor : map.get(u)) {
+            for (Arco<T> n : archiChePartonoDa(u)) {
+                Nodo<T> neighbor = n.getNodo2();
                 if(!q.contains(neighbor)) continue;
-                alt = dist.get(u) + 1;
+                alt = dist.get(u) + n.getValue();
                 if(alt < dist.get(neighbor)){
                     dist.put(neighbor, alt);
                     prev.put(neighbor, u);
                 }
             }
         }
+    }
 
+    private LinkedList<Arco<T>> archiChePartonoDa(Nodo<T> nodo){
+        LinkedList<Arco<T>> a = new LinkedList<>();
+        for (Arco<T> arco : archi) {
+            if(arco.getNodo1() == nodo) a.add(arco);
+        }
+        return a;
     }
 
     private Nodo<T> nodoDistMinore(ArrayList<Nodo<T>> q){
@@ -129,6 +137,10 @@ public class Grafo <T>{
         return q.get(pos);
     }
 
+    public Nodo<T> firstVertex(){
+        return nodi.getFirst();
+    }
+    
     public void printDist() {
         for (Nodo<T> key  : dist.keySet()) {
             System.out.println(key.getData() + " " + dist.get(key));
@@ -139,5 +151,10 @@ public class Grafo <T>{
             System.out.println(key.getData() + " " + prev.get(key).getData());
         }
     }
-    */
+    public LinkedList<Nodo<T>> getNodi() {
+        return nodi;
+    }
+    public LinkedList<Arco<T>> getArchi() {
+        return archi;
+    }
 }
