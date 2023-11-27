@@ -6,17 +6,17 @@ public class GestoreJson <T>{
     private edges<T>[] links; 
 
 
-    GestoreJson(LinkedList<Nodo<T>> nodi, LinkedList<Arco<T>> archi){
+    GestoreJson(LinkedList<Node<T>> nodi, LinkedList<Edge<T>> archi){
         nodes = new vertex[nodi.size()];
         links = new edges[archi.size()];
         int i = 0;
-        for (Arco<T> arco : archi) {
-            links[i] = new edges(arco.getNodo1().getData(), arco.getNodo2().getData(), (int)arco.getValue());
+        for (Edge<T> Edge : archi) {
+            links[i] = new edges(Edge.getNodo1().getData(), Edge.getNodo2().getData(), (int)Edge.getValue());
             i++;
         }
         i = 0;
-        for (Nodo<T> nodo : nodi) {
-            nodes[i] = new vertex(nodo.getData(), 1);
+        for (Node<T> Node : nodi) {
+            nodes[i] = new vertex(Node.getData(), 1);
             i++;
         }
     }

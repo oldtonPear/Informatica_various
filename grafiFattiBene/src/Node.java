@@ -1,6 +1,6 @@
-public class Nodo <T>{
+public class Node <T>{
     private T data;
-    Nodo(T data){
+    Node(T data){
         this.data = data;
     }
     public T getData() {
