@@ -1,7 +1,9 @@
 import java.util.*;
 public class Graph <T>{
-    LinkedList<Node<T>> nodes = new LinkedList<>();
-    LinkedList<Edge<T>> edges = new LinkedList<>();
+    private LinkedList<Node<T>> nodes = new LinkedList<>();
+    private LinkedList<Edge<T>> edges = new LinkedList<>();
+
+    private HashMap<Node<T>, Boolean> mapTrovati = new HashMap<>();
 
     /**collega due vertici e li crea se non esistono, specificare il peso*/
     public void collega(T vertice1, T vertice2, boolean bidirezionale, double peso){
@@ -52,8 +54,8 @@ public class Graph <T>{
         for (Node<T> firstKey : nodes) {
             for (Node<T> secondKey : nodes) {
                 if(firstKey != secondKey){
-                HashMap<Node<T>, Boolean> mapTrovati = new HashMap<>();
-                if(!controllaConnessione(firstKey, secondKey, mapTrovati)) return false;
+                mapTrovati = new HashMap<>();
+                if(!controllaConnessione(firstKey, secondKey)) return false;
                 }
             }
         }
@@ -61,17 +63,17 @@ public class Graph <T>{
     }
 
     /**restituisce true se esiste una connessione tra due nodes passati */
-    private boolean controllaConnessione(Node<T> node, Node<T> node2, HashMap<Node<T>, Boolean> trovati){
-        trovati.put(node, true);
+    private boolean controllaConnessione(Node<T> node, Node<T> node2){
+        mapTrovati.put(node, true);
         if(esisteArco(node, node2)){
             return true;
         } 
         for (Edge<T> key : archiChePartonoDa(node)) {
-            if(trovati.get(key.getNodo2()) == null){ 
-                if(controllaConnessione(key.getNodo2(), node2, trovati)) return true;
+            if(mapTrovati.get(key.getNodo2()) == null){ 
+                if(controllaConnessione(key.getNodo2(), node2)) return true;
                 else{
                     for (Node<T> n : nodes) {
-                        if(trovati.get(n) == null) return false || controllaConnessione(n, node2, trovati);
+                        if(mapTrovati.get(n) == null) return false || controllaConnessione(n, node2);
                     }
                 }  
             }
@@ -144,28 +146,8 @@ public class Graph <T>{
     }
 
     public LinkedList<Edge<T>> kruskal(){
-        HashMap<Node<T>, LinkedList<Node<T>>> hm = new HashMap();
         LinkedList<Edge<T>> list = new LinkedList<>(); 
-        for (Node<T> n : nodes) {
-            hm.put(n, new LinkedList<>());
-        }
-        for (Edge<T> edge : edges) {
-            if(hm.get(edge.getNodo1()) == null) continue;
-            if(!hm.get(edge.getNodo1()).contains(edge.getNodo2())){
-                hm.get(edge.getNodo1()).add(edge.getNodo2());
-                if(hm.get(edge.getNodo2()) == null) continue;
-                hm.get(edge.getNodo1()).addAll(hm.get(edge.getNodo2()));
-                hm.remove(edge.getNodo2());
-            }
-        }
-        for (Node<T> key : hm.keySet()) {
-            for (Node<T> key2 : hm.get(key)) {
-                list.add(getEdgeWith(key, key2));
-            }
-            System.out.println("");
-        }
-        System.out.println("");
-        printaHashMap(hm);
+        
         return list;
     }
 
