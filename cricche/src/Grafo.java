@@ -1,36 +1,22 @@
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.util.*;
-
-import com.google.gson.Gson;
 
 public class Grafo <T> {
     private HashMap<Nodo<T>, LinkedList<Nodo<T>>> map = new HashMap<>();
 
-    /**crea un nuovo vertice */
-    private void nuovoVertice(Nodo<T> vertice){
-        map.put(vertice, new LinkedList<>());
-    }
-
     /**collega due vertici e li crea se non esistono, specificare il peso*/
     public void collega(T vertice1, T vertice2, boolean bidirezionale, double peso){
-        if(map.get(vertice1) == null) nuovoVertice(new Nodo<T>(vertice1, peso));
-        if(map.get(vertice2) == null) nuovoVertice(new Nodo<T>(vertice2, peso));
-        if(!bidirezionale) map.get(vertice1).add(new Nodo<T>(vertice2, peso));
+        Nodo<T> v1 = ritornaNodo(vertice1), v2 = ritornaNodo(vertice2);
+        
+        map.putIfAbsent(v1, new LinkedList<>());
+        map.putIfAbsent(v2, new LinkedList<>());
+        if(!bidirezionale) map.get(v1).add(v2);
         else{
-            map.get(vertice2).add(new Nodo<T>(vertice1, peso));
-            map.get(vertice1).add(new Nodo<T>(vertice2, peso));
+            map.get(v1).add(v2);
+            map.get(v2).add(v1);
         }
     }
 
-    private Nodo<T> ritornaNodo(T vertice){
-        Nodo<T> v = null;
-        for (Nodo<T> key : map.keySet()) {
-            if(key.getData() == vertice) v = key;
-        }
-        if(v == null) v = new Nodo<>(vertice);
-        return v;
-    }
+    
 
     /**collega due vertici e li crea se non esistono, peso = 1*/
     public void collega(T vertice1, T vertice2, boolean bidirezionale){
@@ -44,6 +30,14 @@ public class Grafo <T> {
             map.get(v2).add(v1);
         }
     }
+    private Nodo<T> ritornaNodo(T vertice){
+        Nodo<T> v = null;
+        for (Nodo<T> key : map.keySet()) {
+            if(key.getData() == vertice) v = key;
+        }
+        if(v == null) v = new Nodo<>(vertice);
+        return v;
+    }
 
     /**restituisce una rappresentazione in stringa del grafo */
     public String toString(){
@@ -51,7 +45,7 @@ public class Grafo <T> {
         for (Nodo<T> key : map.keySet()) {
             s += key.getData() + ": ";
             for (Nodo<T> element : map.get(key)) {
-                s += " " + element.getData() + " " + element.getPeso() + "|";
+                s += " " + element.getData() + " " + 1 + "|";
             }
             s+= "\n";
         }
@@ -222,23 +216,5 @@ public class Grafo <T> {
             System.out.println(key.getData() + " " + prev.get(key).getData());
         }
     }
-    @SuppressWarnings("unchecked")
-    public void faiCoseConJson(){
-        Gson gson = new Gson();
-        Nodo<T>[] nodi= (Nodo<T>[])map.keySet().toArray();
-        
-        String json = gson.toJson(map);
-        System.out.println(json);
-        try{
-            BufferedWriter writer = new BufferedWriter(new FileWriter("../graph.json"));
-            writer.write(json);
-            writer.flush();
-            writer.close();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        
-        
-        
-    }
+    
 }

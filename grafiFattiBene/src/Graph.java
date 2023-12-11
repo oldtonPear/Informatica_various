@@ -49,13 +49,14 @@ public class Graph <T>{
         }
         return s;
     }
+
     /**ritorna true se il Graph è connesso */
     public boolean isConnected(){
         for (Node<T> firstKey : nodes) {
             for (Node<T> secondKey : nodes) {
                 if(firstKey != secondKey){
                 mapTrovati = new HashMap<>();
-                if(!controllaConnessione(firstKey, secondKey)) return false;
+                if(!areConnected(firstKey, secondKey)) return false;
                 }
             }
         }
@@ -63,17 +64,17 @@ public class Graph <T>{
     }
 
     /**restituisce true se esiste una connessione tra due nodes passati */
-    private boolean controllaConnessione(Node<T> node, Node<T> node2){
+    private boolean areConnected(Node<T> node, Node<T> node2){
         mapTrovati.put(node, true);
         if(esisteArco(node, node2)){
             return true;
         } 
         for (Edge<T> key : archiChePartonoDa(node)) {
             if(mapTrovati.get(key.getNodo2()) == null){ 
-                if(controllaConnessione(key.getNodo2(), node2)) return true;
+                if(areConnected(key.getNodo2(), node2)) return true;
                 else{
                     for (Node<T> n : nodes) {
-                        if(mapTrovati.get(n) == null) return false || controllaConnessione(n, node2);
+                        if(mapTrovati.get(n) == null) return false || areConnected(n, node2);
                     }
                 }  
             }

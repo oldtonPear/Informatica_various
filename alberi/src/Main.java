@@ -4,7 +4,7 @@ public class Main {
         tree.add(0, 4);
         tree.add(1, 2);
         tree.add(2, 5);
-        tree.add(5, 5);
+        tree.add(5, 0);
         
 
         tree.preOrder();

@@ -12,6 +12,5 @@ public class Main {
         g.printDist();
         System.out.println("");
         g.printPrev();
-        g.faiCoseConJson();
     }
 }

@@ -1,0 +1,77 @@
+*****INIZIO*****
+riga0
+riga1
+riga2
+riga3
+riga4
+***** FINE *****
+*****INIZIO*****
+riga0
+riga1
+riga2
+riga3
+riga4
+riga5
+riga6
+riga7
+riga8
+***** FINE *****
+*****INIZIO*****
+riga0
+riga1
+riga2
+***** FINE *****
+*****INIZIO*****
+riga0
+riga1
+riga2
+riga3
+riga4
+***** FINE *****
+*****INIZIO*****
+riga0
+riga1
+riga2
+riga3
+riga4
+riga5
+***** FINE *****
+*****INIZIO*****
+riga0
+riga1
+riga2
+riga3
+riga4
+riga5
+riga6
+riga7
+riga8
+***** FINE *****
+*****INIZIO*****
+riga0
+riga1
+riga2
+riga3
+riga4
+riga5
+riga6
+riga7
+riga8
+***** FINE *****
+*****INIZIO*****
+riga0
+riga1
+riga2
+riga3
+riga4
+riga5
+riga6
+***** FINE *****
+*****INIZIO*****
+riga0
+riga1
+riga2
+riga3
+riga4
+riga5
+***** FINE *****
