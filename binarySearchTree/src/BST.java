@@ -1,19 +1,20 @@
+
 public class BST<T extends Comparable<T>> extends BinaryTree<T>{
 
     BST(T root){
         setRoot(new Node<T>(root, null, null));
     }
 
-    public boolean recursiveInsert(T val, Node<T> current){
+    public boolean insertNode(T val, Node<T> current){
         if (getRoot() == null) setRoot(new Node<T>(val, null, null));
 
         if(current != null){
 
             if(val.compareTo(current.getValue()) < 0){
-                recursiveInsert(val, current.getLeft());
+                insertNode(val, current.getLeft());
             } 
             if(val.compareTo(current.getValue()) > 0){
-                recursiveInsert(val, current.getRight());
+                insertNode(val, current.getRight());
             } 
             if(val.compareTo(current.getValue()) < 0 && current.getLeft() == null){
                 current.setLeft(new Node<T> (val, null, null));
@@ -48,72 +49,54 @@ public class BST<T extends Comparable<T>> extends BinaryTree<T>{
         if(val.compareTo(current.getValue()) >= 0 && current.getRight() != null) return getParent(val, current.getRight());
         return null;
     }
-
-    public void recursivedDelete(T val, Node<T> current){
-        Node<T> removed = binarySearch(val, getRoot());
-        Node<T> parent = getParent(val, current);
-        if(isFoglia(removed)){
-            if(parent.getLeft() == removed){
-                if(val.compareTo(parent.getValue()) < 0) parent.setLeft(null);
-            }
-            else parent.setRight(null);
-        }
-        else if(removed.getLeft() != null ^ removed.getRight() != null){
-            if(removed.getLeft() != null){
-                if(parent.getValue().compareTo(val) < 0){
-                    Node<T> support = removed;
-                    parent.setLeft(removed.getLeft());
-                    parent.getLeft().setLeft(support);
-                    support.setLeft(null);
-                    recursivedDelete(val, support);
-                }
-                if(parent.getValue().compareTo(val) >= 0){
-                    Node<T> support = removed;
-                    parent.setLeft(removed.getRight());
-                    parent.getLeft().setLeft(support);
-                    support.setRight(null);
-                    recursivedDelete(val, support);
-                }
-            }
-            else{
-                if(parent.getValue().compareTo(val) < 0){
-                    Node<T> support = removed;
-                    parent.setLeft(removed.getLeft());
-                    parent.getLeft().setLeft(support);
-                    support.setLeft(null);
-                    recursivedDelete(val, support);
-                }
-                if(parent.getValue().compareTo(val) >= 0){
-                    Node<T> support = removed;
-                    parent.setLeft(removed.getRight());
-                    parent.getLeft().setLeft(support);
-                    support.setRight(null);
-                    recursivedDelete(val, support);
-                }
-                
-            }
-
-        }
-        else if(removed.getLeft() != null && removed.getRight() != null){
-            System.out.println(getSuccessor(removed).getValue());   
-                recursivedDelete(val, removed);
-        }
-    }
-
-    public Node<T> getSuccessor(Node<T> current){
-        if(isFoglia(current)) return current;
-
-        if(current.getValue().compareTo(current.getValue()) < 0 && current.getLeft() != null) return getSuccessor(current);
-        else if(current.getValue().compareTo(current.getValue()) >= 0 && current.getRight() != null) return getSuccessor(current);
-        return null;
-    }
     
-    public void iterativeInsert(T val){
-
+    /**
+     *
+     * @param root
+     * @param key: this needs to be deleted
+     * @return Node
+     */
+    public Node<T> deleteNode(Node<T> root, T key) {
+        if(root == null) return root;
+        if(key.compareTo(root.getValue()) > 0){
+            root.setRight(deleteNode(root.getRight(), key));
+        }else if(key.compareTo(root.getValue()) < 0){
+            root.setLeft(deleteNode(root.getLeft(), key));
+        }else{
+            if(root.getLeft() == null && root.getRight() == null){
+                root = null;
+            }else if(root.getRight() != null){
+                root.setValue(successor(root));
+                root.setRight(deleteNode(root.getRight(), root.getValue()));
+            }else{
+                root.setValue(predecessor(root));
+                root.setLeft(deleteNode(root.getLeft(), root.getValue()));
+            }
+        }
+        return root;
     }
-
-    public void iterativeDelete(T val){
-
+    /**
+     * Return node's successor value
+     * @param root
+     * @return
+     */
+    private T successor(Node<T> root){
+        root = root.getRight();
+        while(root.getLeft() != null){
+            root = root.getLeft();
+        }
+        return root.getValue();
     }
-    
+    /**
+     * Return node's predecessor value
+     * @param root
+     * @return
+     */
+    private T predecessor(Node<T> root){
+        root = root.getLeft();
+        while(root.getRight() != null){
+            root = root.getRight();
+        }
+        return root.getValue();
+    }
 }
